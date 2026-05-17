@@ -14,7 +14,240 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      achievements: {
+        Row: {
+          category: string
+          description: string
+          icon: string | null
+          id: string
+          name: string
+          xp_required: number
+        }
+        Insert: {
+          category: string
+          description: string
+          icon?: string | null
+          id: string
+          name: string
+          xp_required?: number
+        }
+        Update: {
+          category?: string
+          description?: string
+          icon?: string | null
+          id?: string
+          name?: string
+          xp_required?: number
+        }
+        Relationships: []
+      }
+      games: {
+        Row: {
+          black_player: string | null
+          created_at: string
+          difficulty: string | null
+          ended_at: string | null
+          final_position: Json | null
+          id: string
+          mode: string
+          moves: Json
+          result: string | null
+          variant: string
+          white_player: string | null
+        }
+        Insert: {
+          black_player?: string | null
+          created_at?: string
+          difficulty?: string | null
+          ended_at?: string | null
+          final_position?: Json | null
+          id?: string
+          mode?: string
+          moves?: Json
+          result?: string | null
+          variant?: string
+          white_player?: string | null
+        }
+        Update: {
+          black_player?: string | null
+          created_at?: string
+          difficulty?: string | null
+          ended_at?: string | null
+          final_position?: Json | null
+          id?: string
+          mode?: string
+          moves?: Json
+          result?: string | null
+          variant?: string
+          white_player?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "games_black_player_fkey"
+            columns: ["black_player"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "games_white_player_fkey"
+            columns: ["white_player"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string
+          draws: number
+          elo: number
+          id: string
+          losses: number
+          onboarded: boolean
+          preferred_language: string
+          preferred_skin: string
+          preferred_variant: string
+          updated_at: string
+          wins: number
+          xp: number
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string
+          draws?: number
+          elo?: number
+          id: string
+          losses?: number
+          onboarded?: boolean
+          preferred_language?: string
+          preferred_skin?: string
+          preferred_variant?: string
+          updated_at?: string
+          wins?: number
+          xp?: number
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string
+          draws?: number
+          elo?: number
+          id?: string
+          losses?: number
+          onboarded?: boolean
+          preferred_language?: string
+          preferred_skin?: string
+          preferred_variant?: string
+          updated_at?: string
+          wins?: number
+          xp?: number
+        }
+        Relationships: []
+      }
+      tournament_entries: {
+        Row: {
+          joined_at: string
+          tournament_id: string
+          user_id: string
+        }
+        Insert: {
+          joined_at?: string
+          tournament_id: string
+          user_id: string
+        }
+        Update: {
+          joined_at?: string
+          tournament_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournament_entries_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tournament_entries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tournaments: {
+        Row: {
+          created_at: string
+          id: string
+          max_elo: number
+          min_elo: number
+          name: string
+          starts_at: string
+          status: string
+          variant: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          max_elo?: number
+          min_elo?: number
+          name: string
+          starts_at?: string
+          status?: string
+          variant?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          max_elo?: number
+          min_elo?: number
+          name?: string
+          starts_at?: string
+          status?: string
+          variant?: string
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          earned_at: string
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          earned_at?: string
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          earned_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_achievements_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
